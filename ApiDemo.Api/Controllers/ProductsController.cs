@@ -1,6 +1,7 @@
 using ApiDemo.Api.Domain;
 using ApiDemo.Api.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiDemo.Api.Controllers;
@@ -12,16 +13,17 @@ sealed public class ProductsController(IProductService productService) : Control
     private readonly IProductService _productService = productService;
 
     [Authorize(Policy = "UsersPolicy"), HttpGet]
-    public ActionResult<IEnumerable<string>> Get() => Ok(_productService.GetAll());
+    public Ok<GetAllProductsResponse> GetAll()
+        => TypedResults.Ok(new GetAllProductsResponse(_productService.GetAll()));
 
     [Authorize(Policy = "AdminsPolicy"), HttpPost]
-    public ActionResult Add(CreateProductRequest data)
+    public Results<Created, BadRequest> Add(CreateProductRequest data)
     {
         if (_productService.Add(data.Product))
         {
-            return Created();
+            return TypedResults.Created();
         }
 
-        return BadRequest(User.Identity?.Name);
+        return TypedResults.BadRequest();
     }
 }

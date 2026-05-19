@@ -2,3 +2,4 @@ appsettings.*
 */bin/*
 */obj/*
 .vscode/
+*/TestResults/*

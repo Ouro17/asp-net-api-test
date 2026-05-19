@@ -2,8 +2,8 @@
 @port = 7267
 @url = https://{{host}}:{{port}}/api
 
-@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc3OTE5MjY5NCwiaXNzIjoiQXBpRGVtbyIsImF1ZCI6IkFwaURlbW9DbGllbnQifQ.N8K7MQGmKJ7V1pX-81q44q3etv5G0etQYHiyh_zvk_Q
-@user_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidXNlciIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NzkxOTYwMTMsImlzcyI6IkFwaURlbW8iLCJhdWQiOiJBcGlEZW1vQ2xpZW50In0.KdGI9feqi3LvklTHrlYDqsKY9HcAyD63qS1kuQDXYXw
+@admin_token = GET-THE-ADMIN-TOKEN-AND-PUT-IT-HERE
+@user_token = GET-THE-USER-TOKEN-AND-PUT-IT-HERE
 
 ### Login as admin
 POST {{url}}/login
@@ -35,7 +35,17 @@ Content-Type: application/json
   "password": "1234"
 }
 
-### Get role
+### Get role as admin
+GET  {{url}}/login/role
+Authorization: Bearer {{admin_token}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "admin"
+}
+
+### Get role as user
 GET  {{url}}/login/role
 Authorization: Bearer {{user_token}}
 Accept: application/json
@@ -45,10 +55,15 @@ Content-Type: application/json
   "username": "user"
 }
 
-### Weather
-GET {{url}}/weather
+### Get invalid user role
+GET  {{url}}/login/role
+Authorization: Bearer {{admin_token}}
 Accept: application/json
 Content-Type: application/json
+
+{
+  "username": "fasdf"
+}
 
 ### Get products
 GET {{url}}/products/

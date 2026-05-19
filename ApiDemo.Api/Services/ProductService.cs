@@ -2,7 +2,7 @@ namespace ApiDemo.Api.Services;
 
 sealed public class ProductService : IProductService
 {
-    private static readonly List<string> _products =
+    private readonly List<string> _products =
     [
         "Keyboard", "Mouse", "Monitor"
     ];

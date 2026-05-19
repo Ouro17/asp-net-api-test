@@ -43,15 +43,10 @@ builder.Services
 builder.Services.TryAddSingleton<IProductService, ProductService>();
 builder.Services.TryAddSingleton<ITokenService, TokenService>();
 builder.Services.TryAddSingleton<ILoginService, LoginService>();
-builder.Services.TryAddScoped<IWeatherService, WeatherService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+app.MapOpenApi();
 
 app.UseHttpsRedirection();
 
